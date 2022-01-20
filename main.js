@@ -21,7 +21,7 @@ const blockExplorer = "https://polygonscan.com/";
 const chainName = "matic";
 
 //Others
-const openSeaContractURL = "https://opensea.io/";
+const openSeaContractURL = "https://opensea.io/collection/pfpoop";
 
 
 Moralis.start({ serverUrl, appId });
