@@ -1,18 +1,213 @@
 <!DOCTYPE html>
 <html>
-  <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>PfPoop</title>
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.3/css/bulma.min.css">
-  </head>
-  <body>
-  <section class="section">
-    <div class="container">
-        <figure class="image">
-            <img src="./assets/under_contruction.gif">
-          </figure>
-    </div>
-  </section>
-  </body>
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <!-- Primary Meta Tags -->
+  <title>PFPoop, mintable poop collectible</title>
+  <meta name="title" content="PFPoop, mintable poop collectible">
+  <meta name="description"
+    content="The Web3.0 revolution is now! PFPoop is a mintable collection of 999 unique poops handle by the Polygon blockchain and IPFS">
+
+  <!-- Open Graph / Facebook -->
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://pfpoop.xyz/">
+  <meta property="og:title" content="PFPoop, mintable poop collectible">
+  <meta property="og:description"
+    content="The Web3.0 revolution is now! PFPoop is a mintable collection of 999 unique poops handle by the Polygon blockchain and IPFS">
+  <meta property="og:image" content="https://pfpoop.xyz/assets/favicon.png">
+
+  <!-- Twitter -->
+  <meta property="twitter:card" content="summary_large_image">
+  <meta property="twitter:url" content="https://pfpoop.xyz/">
+  <meta property="twitter:title" content="PFPoop, mintable poop collectible">
+  <meta property="twitter:description"
+    content="The Web3.0 revolution is now! PFPoop is a mintable collection of 999 unique poops handle by the Polygon blockchain and IPFS">
+  <meta property="twitter:image" content="https://pfpoop.xyz/assets/favicon.png">
+
+  <link rel="icon" type="image/x-icon" href="/assets/favicon.png">
+
+  <link rel="stylesheet" href="style.css">
+
+  <script src="https://unpkg.com/moralis/dist/moralis.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/web3@latest/dist/web3.min.js"></script>
+</head>
+
+<body>
+  <div class="bg-img">
+    <section class="section">
+
+      <div class="container">
+
+        <div class="columns is-centered">
+          <div class="column is-half ">
+            <figure class="image">
+              <img src="./assets/welcome.gif">
+            </figure>
+            <div class="content is-large has-text-centered">
+              <p>
+                "The <strong>Web3.0</strong> revolution is now"
+              </p>
+            </div>
+          </div>
+        </div>
+
+        <div class="columns is-centered is-vcentered">
+          <div class="column is-half ">
+            <div class="content has-text-centered is-size-4">
+              <p>PFPoop is a mintable collection of <b>999 unique poops</b> handle by the Polygon blockchain and IPFS.
+              </p>
+
+            </div>
+          </div>
+        </div>
+
+        <div class="columns is-centered">
+          <div class="column is-one-quarter" id="column-login">
+            <figure class="image" id="image-login">
+              <a id="btn-login">
+                <img src="./assets/wallet_connect.gif">
+              </a>
+            </figure>
+          </div>
+        </div>
+
+        <hr style="height: 10px; background-color:brown">
+
+        <div class="columns is-centered is-mobile">
+
+          <div class="column is-one-fifth"><img src="./assets/poop/266.png"></div>
+          <div class="column is-one-fifth"><img src="./assets/poop/22.png"></div>
+          <div class="column is-one-fifth"><img src="./assets/poop/183.png"></div>
+          <div class="column is-one-fifth"><img src="./assets/poop/417.png"></div>
+          <div class="column is-one-fifth"><img src="./assets/poop/440.png"></div>
+        </div>
+        <div class="columns is-centered is-mobile">
+
+          <div class="column is-one-fifth"><img src="./assets/poop/520.png"></div>
+          <div class="column is-one-fifth"><img src="./assets/poop/619.png"></div>
+          <div class="column is-one-fifth"><img src="./assets/poop/930.png"></div>
+          <div class="column is-one-fifth"><img src="./assets/poop/938.png"></div>
+          <div class="column is-one-fifth"><img src="./assets/poop/991.png"></div>
+        </div>
+
+
+
+
+        <hr style="height: 10px; background-color:brown">
+
+        <div class="columns is-centered" id="column-mint">
+          <div class="column is-one-fifth">
+            <figure class="image">
+              <a id="btn-mint"><img src="./assets/mint_fire.gif" id="image-mint"></a>
+            </figure>
+            <div class="content has-text-centered is-size-4">
+              <p><span id="js-total-supply">?</span> of 999 minted</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="columns is-centered">
+          <div class="column is-half">
+            <div class="content has-text-centered is-size-4">
+              <p>Mint price is currently <b>20 MATIC</b>.</p>
+              <p>Price increase every 100 mints, please refer to the <b>FOMO table</b> below.</p>
+            </div>
+
+          </div>
+        </div>
+
+        <hr style="height: 10px; background-color:brown">
+
+
+
+        <div class="columns is-centered">
+          <div class="column is-half">
+            <div class="content has-text-centered is-size-4">
+              <h4 class="title is-4"><u>FOMO table</u></h3>
+                <p>Mint price increses by 20 MATIC every 100 mints, get your Poop ASAP ! (wow, much fear!)</p>
+                <figure class="image">
+                  <img src="./assets/capture.png">
+                </figure>
+            </div>
+          </div>
+        </div>
+
+        <div class="columns is-centered">
+          <div class="column is-half">
+            <div class="content has-text-centered is-size-4">
+              <h4 class="title is-4"><u>Scarity</u></h3>
+                <p>There are no scarities in the PFPoop collection, but nine gold poops are hidden in the collection.
+                </p>
+                <img src="./assets/poop/991.png">
+            </div>
+          </div>
+        </div>
+
+
+
+
+        <hr style="height: 10px; background-color:brown">
+
+        <div class="columns is-centered">
+          <div class="column is-4">
+            <a href="">
+              <div class="content has-text-centered"><b>Click here to Opensea</b></div>
+            </a>
+          </div>
+
+          <div class="column is-4">
+            <a href="">
+              <div class="content has-text-centered"><b>Click here to Looksrare</b></div>
+            </a>
+          </div>
+
+          <div class="column is-4 is-centered">
+            <div class="content has-text-centered">
+              <a href="">
+                <b>Click here to Polyscan</b>
+              </a>
+            </div>
+          </div>
+          <div class="column is-4">
+            <a href="">
+              <div class="content has-text-centered"><b>Click here to Twitter</b></div>
+            </a>
+          </div>
+        </div>
+
+
+        <div class="columns">
+          <div class="column is-3"><a href="mailto:contact@pfpoop.xyz"><img src="assets/email04.gif"></a></div>
+        </div>
+
+        <div class="columns">
+          <div class="column is-3"><img src="assets/now20.gif"></div>
+        </div>
+
+        <div class="columns is-centered">
+          <div class="column is-one-fifth">
+            <figure class="image">
+              <img src="./assets/cube.gif">
+            </figure>
+            <div class="content has-text-weight-light has-text-centered">
+              <p>
+                Powered by Silicon Graphics &copy;
+              </p>
+            </div>
+          </div>
+        </div>
+
+
+
+      </div>
+    </section>
+  </div>
+
+  <script type="text/javascript" src="./main.js"></script>
+  <script defer data-domain="pfpoop.xyz" src="https://plausible.io/js/plausible.js"></script>
+
+</body>
+
 </html>
