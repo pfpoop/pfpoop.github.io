@@ -1,0 +1,442 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- Primary Meta Tags -->
+    <title>PFPoop, mintable poop collectible</title>
+    <meta name="title" content="PFPoop, mintable poop collectible">
+    <meta name="description"
+      content="The Web3.0 revolution is now! PFPoop is a mintable collection of 999 unique poops handle by the Polygon blockchain and IPFS">
+  
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://pfpoop.xyz/">
+    <meta property="og:title" content="PFPoop, mintable poop collectible">
+    <meta property="og:description"
+      content="The Web3.0 revolution is now! PFPoop is a mintable collection of 999 unique poops handle by the Polygon blockchain and IPFS">
+    <meta property="og:image" content="https://pfpoop.xyz/assets/favicon.png">
+  
+    <!-- Twitter -->
+    <meta property="twitter:card" content="summary_large_image">
+    <meta property="twitter:url" content="https://pfpoop.xyz/">
+    <meta property="twitter:title" content="PFPoop, mintable poop collectible">
+    <meta property="twitter:description"
+      content="The Web3.0 revolution is now! PFPoop is a mintable collection of 999 unique poops handle by the Polygon blockchain and IPFS">
+    <meta property="twitter:image" content="https://pfpoop.xyz/assets/favicon.png">
+  
+    <link rel="icon" type="image/x-icon" href="/assets/favicon.png">
+  
+  
+    <script src="https://unpkg.com/moralis/dist/moralis.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/web3@latest/dist/web3.min.js"></script>
+    <script src="js/jquery.js"></script>
+
+    <!-- Primary Meta Tags -->
+    <title>PFPoop, mintable poop collectible</title>
+    <meta name="title" content="PFPoop, mintable poop collectible">
+    <meta name="description"
+      content="The Web3.0 revolution is now! PFPoop is a mintable collection of 999 unique poops handle by the Polygon blockchain and IPFS">
+  
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://pfpoop.xyz/">
+    <meta property="og:title" content="PFPoop, mintable poop collectible">
+    <meta property="og:description"
+      content="The Web3.0 revolution is now! PFPoop is a mintable collection of 999 unique poops handle by the Polygon blockchain and IPFS">
+    <meta property="og:image" content="https://pfpoop.xyz/assets/favicon.png">
+  
+    <!-- Twitter -->
+    <meta property="twitter:card" content="summary_large_image">
+    <meta property="twitter:url" content="https://pfpoop.xyz/">
+    <meta property="twitter:title" content="PFPoop, mintable poop collectible">
+    <meta property="twitter:description"
+      content="The Web3.0 revolution is now! PFPoop is a mintable collection of 999 unique poops handle by the Polygon blockchain and IPFS">
+    <meta property="twitter:image" content="https://pfpoop.xyz/assets/favicon.png">
+  
+    <link rel="icon" type="image/x-icon" href="/assets/favicon.png">
+  
+  
+    <script src="https://unpkg.com/moralis/dist/moralis.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/web3@latest/dist/web3.min.js"></script>
+
+    <!-- Stylesheets & Fonts -->
+    <link href="css/plugins.css" rel="stylesheet">
+    <link href="css/style.css" rel="stylesheet">
+</head>
+
+
+
+<body>
+    <!-- Body Inner -->
+    <div class="body-inner">
+        <!-- Topbar -->
+        <div id="topbar" class="topbar-transparent topbar-fullwidth dark d-none d-xl-block d-lg-block">
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-6">
+                        <ul class="top-menu">
+                            <li><a href="#">Email: contact@pfpoop.xyz</a></li>
+                        </ul>
+                    </div>
+                    <div class="col-md-6 d-none d-sm-block">
+                        <div class="social-icons social-icons-colored-hover">
+                            <ul>
+                                    <li class="social-twitter"><a href="https://twitter.com/pfpoop_xyz"><i class="fab fa-twitter"></i></a></li>
+                                    </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- end: Topbar -->
+        <!-- Header -->
+        <header id="header" data-transparent="true" data-fullwidth="true" class="dark submenu-light">
+         
+        </header>
+        <!-- end: Header -->
+
+
+        <!-- Hero banner -->
+        <!-- <section class="fullscreen" style="padding-top: 0px;">
+            <div class="bg-overlay" data-style="13"></div>
+            <div class="shape-divider" data-style="4"></div>-->
+            <div id="slider" class="inspiro-slider slider-fullscreen">
+            
+            <!-- Slide 1 -->
+            <div class="slide" data-bg-video="https://cdns3.makewebvideo.com/data2/userfiles/public/jzbxfrchgaqyuzr8gqhyabvz/movie_GB7Ey7D4Dkp2NyZG.mp4.1920x1080.mp4">
+                <div class="bg-overlay"></div>
+                <div class="container">
+                    <div class="slide-captions text-left text-light">
+                        <!-- Captions -->
+                        <h2 class="text-uppercase text-lg">PFPoop</h2>
+                        <p class="text-small">The Web3.0 revolution is now! PFPoop is a collection of 999 unique poops handle by Polygon blockchain</p>
+                        <div>
+                            <div><a href="#modalVideo" data-lightbox="inline" class="btn btn-lg"><i class="fa fa-play"></i> badass trailer</a></div>
+                        </div>
+                        <!-- end: Captions -->
+                    </div>
+                </div>
+            </div>
+            <!-- end: Hero banner -->
+        </div>
+        <!-- </section> -->
+
+        <!-- section mint-->
+        <section class="fullscreen" data-bg-image="assets/poop/22.png">
+            <div class="bg-overlay" data-style="7"></div>
+            <div class="shape-divider" data-style="7" data-position="top" data-flip-vertical="true"></div>
+            <div class="shape-divider" data-style="7"></div>
+            <div class="container">
+                <!-- <div class="container-fullscreen"> -->
+                    <!-- <div class="text-middle"> -->
+                        <div class="row">
+                        <div class="heading-text text-light col-lg-6">
+                            <h2 class="font-weight-800"><span>Minting is open!</span></h2>
+                            <p>Mint price is currently <b>20 MATIC</b> (~0.012 ETH)</p>
+                            <p><i class="fa fa-info-circle"></i> Mint price increses by 20 MATIC every 100 mints</p>
+                            <a class="scroll-to" href="#to-fomo"><button class="btn btn-light btn-outline btn-rounded">Read More</button></a>
+                        </div>
+                        <div class="col-lg-6 text-light text-center align-self-center">
+                                    <a class="btn btn-lg" id="btn-login"><i class="fa fa-sign-in-alt"></i> Wallet connexion</a>
+                            <br><br>                    
+                    
+                            <a class="btn btn-lg disabled" id="btn-mint"><i class="fa fa-rocket"></i> MINT NOW ! <i class="fa fa-rocket"></i></a>
+                            <br><br>
+                            <h3><span id="js-total-supply">?</span> of 999 minted</h3>
+
+                            <div id="column-mint">
+
+                            </div>
+                        </div>
+                    <!-- </div> -->
+                <!-- </div> -->
+            </div>
+        </section>
+        <!-- end: section mint-->
+
+
+        <section>
+            <!-- <div class="container"> -->
+                <!-- <div class="container-fullscreen"> -->
+                    <!-- <div class="text-middle"> -->
+                         <!--Portfolio Carousel -->
+                <div class="carousel" data-items="5">
+                    <!-- portfolio item -->
+                    <div class="portfolio-item">
+                        <div class="portfolio-item-wrap">
+                            <div class="portfolio-image">
+                                <img src="assets/poop/7.png">
+                            </div>
+                        </div>
+                    </div>
+                    <!-- end: portfolio item -->
+                    <!-- portfolio item -->
+                    <div class="portfolio-item">
+                        <div class="portfolio-item-wrap">
+                            <div class="portfolio-image">
+                                <img src="assets/poop/22.png">
+                            </div>
+                        </div>
+                    </div>
+                    <!-- end: portfolio item -->
+                    <!-- portfolio item -->
+                    <div class="portfolio-item">
+                        <div class="portfolio-item-wrap">
+                            <div class="portfolio-image">
+                                <img src="assets/poop/183.png">
+                            </div>
+                        </div>
+                    </div>
+                    <!-- end: portfolio item -->
+                    <!-- portfolio item -->
+                    <div class="portfolio-item">
+                        <div class="portfolio-item-wrap">
+                            <div class="portfolio-image">
+                                <img src="assets/poop/266.png">
+                            </div>
+                        </div>
+                    </div>
+                    <!-- end: portfolio item -->
+                    <!-- portfolio item -->
+                    <div class="portfolio-item">
+                        <div class="portfolio-item-wrap">
+                            <div class="portfolio-image">
+                                <img src="assets/poop/417.png">
+                            </div>
+                        </div>
+                    </div>
+                    <!-- end: portfolio item -->
+                </div>
+                    <!-- </div> -->
+                <!-- </div> -->
+            <!-- </div> -->
+        </section>
+
+
+        <!-- Section -->
+        <section class="fullscreen" data-bg-image="assets/poop/930.png">
+            <div class="bg-overlay" data-style="4"></div>
+            <div class="shape-divider" data-style="4" data-position="top" data-flip-vertical="true"></div>
+            <div class="shape-divider" data-style="4"></div>
+            <div class="container">
+                <div class="row">
+                    <div class="heading-text text-light col-lg-6">
+                        <h2 class="font-weight-800" id="to-fomo"><span>FOMO table</span></h2>
+                        <p>Mint price increses by 20 MATIC every 100 mints, get your Poop ASAP ! (wow, much fear!)</p>
+                    </div>
+                    <div class="col-lg-6 text-light text-center">
+                        <table class="table text-light">
+                            <thead>
+                                <tr>
+                                    <th scope="col">Supply from-to</th>
+                                    <th scope="col">Price in MATIC</th>
+                                    <th scope="col">Price in ETH</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr class="table-dark">
+                                    <th scope="row">1-99 (current)</th>
+                                    <td>20</td>
+                                    <td>~0.012</td>
+                                </tr>
+                                <tr>
+                                    <th scope="row">100-199</th>
+                                    <td>40</td>
+                                    <td>~0.024</td>
+                                </tr>
+                                <tr>
+                                    <th scope="row">200-299</th>
+                                    <td>60</td>
+                                    <td>~0.035</td>
+                                </tr>
+                                <tr>
+                                    <th scope="row">300-399</th>
+                                    <td>80</td>
+                                    <td>~0.047</td>
+                                </tr>
+                                <tr>
+                                    <th scope="row">400-499</th>
+                                    <td>100</td>
+                                    <td>~0.059</td>
+                                </tr>
+                                <tr>
+                                    <th scope="row">500-599</th>
+                                    <td>120</td>
+                                    <td>~0.071</td>
+                                </tr>
+                                <tr>
+                                    <th scope="row">600-699</th>
+                                    <td>140</td>
+                                    <td>~0.082</td>
+                                </tr>
+                                <tr>
+                                    <th scope="row">700-799</th>
+                                    <td>160</td>
+                                    <td>~0.094</td>
+                                </tr>
+                                <tr>
+                                    <th scope="row">800-899</th>
+                                    <td>180</td>
+                                    <td>~0.106</td>
+                                </tr>
+                                <tr>
+                                    <th scope="row">900-999</th>
+                                    <td>200</td>
+                                    <td>~0.118</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+            </div>
+        </section>
+        <!-- end: Section -->
+
+
+
+        <!-- Testimonials -->
+        <section class="fullscreen" data-bg-image="assets/poop/266.png">
+            <div class="bg-overlay" data-style="7"></div>
+            <div class="shape-divider" data-style="7" data-position="top" data-flip-vertical="true"></div>
+            <div class="shape-divider" data-style="7"></div>
+            <div class="container">
+                <div class="heading-text text-light col-lg-6">
+                    <h2 class="font-weight-800"><span>Testimonials</span></h2>
+                </div>
+                <div class="carousel arrows-visibile testimonial testimonial-single testimonial-blockquote text-light" data-items="1" data-autoplay="true" data-animate-in="fadeIn" data-animate-out="fadeOut" data-loop="true">
+                    <!-- Testimonials item -->
+                    <div class="testimonial-item">
+                        <p>I am fast. To give you a reference point. I’m somewhere between a snake and a mongoose. And a panther.</p>
+                        <span>Dwight Schrute</span>
+                        <span>Assistant to the Regional Manager, Dunder Mifflin</span>
+                    </div>
+                    <!-- end: Testimonials item-->
+                    <!-- Testimonials item -->
+                    <div class="testimonial-item">
+                        <p>DM for NFT promotion!</p>
+                        <span>NFT_Forever299</span>
+                        <span>NFT Promoter, Twitter</span>
+                    </div>
+                    <!-- end: Testimonials item-->
+                    <!-- Testimonials item -->
+                    <div class="testimonial-item">
+                        <p>What's NFT? Can you please find a real job!?</p>
+                        <span>My mom</span>
+                    </div>
+                    <!-- end: Testimonials item-->
+                    
+                    <div class="testimonial-item">
+                        <p>My Metamask Key > 0x2FFDca547f259f275AA3C3c46beC822bc19B73A2 ! Done ! This NFT is awesome i really want this woow</p>
+                        <span>iwaryz</span>
+                        <span>r/NFTgiveaway, Reddit</span>
+                    </div>
+                    
+            </div>
+        </section>
+        <!-- end: Testimonials -->
+
+        
+       
+
+
+        <!-- section faq-->
+        <section>
+            <div class="container">
+                <div class="heading-text heading-gradient">
+                    <h2><span>FAQ</span></h2>
+                    <p>Don't have much to say, but here you'll find some useless answers to your hot questions</p>
+                  </div>
+                <div class="accordion toggle fancy radius clean">
+                    <div class="ac-item">
+                        <h5 class="ac-title"><i class="fa fa-question-circle"></i>What the purpose of PFPoop?</h5>
+                        <div style="display: none;" class="ac-content"><img src="assets/homer_bushes.gif"></div>
+                    </div>
+                    <div class="ac-item">
+                        <h5 class="ac-title"><i class="fa fa-question-circle"></i>PFPoop will be in the Metaverse?</h5>
+                        <div style="display: none;" class="ac-content">Please define first what is a Metaverse, you have 2 hours.</div>
+                    </div>
+                    <div class="ac-item">
+                        <h5 class="ac-title"><i class="fa fa-question-circle"></i>Any roadmap?</h5>
+                        <div style="display: none;" class="ac-content">Nop, PFPoop may have update in the futur or may not.</div>
+                    </div>
+
+                </div>
+            </div>
+        </section>
+        <!-- end: section faq-->
+
+        <section>
+            <div class="container">
+                   <div class="row">
+                    <div class="col-4 text-center align-self-center">
+                        <a taget="_blank" href="https://twitter.com/pfpoop_xyz"><img style="width: 50%; height:auto;" src="assets/twitter-logo.png"></a>
+                    </div>
+                    <div class="col-4 text-center align-self-center">
+                        <a taget="_blank" href="https://opensea.io/collection/pfpoop"><img style="width: 50%; height:auto;" src="assets/opensea-logo.png"></a>
+                    </div>
+                    <div class="col-4 text-center align-self-center">
+                        <a taget="_blank" href="https://polygonscan.com/token/0x64386bf59bfBc2Be39D054b050b04CE6402Ed7e3"><img  style="width: 50%; height:auto;" src="assets/polygon-logo.png"></a>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+
+        <!-- Footer -->
+        <footer id="footer" class="inverted">
+                               
+            <div class="copyright-content">
+                <div class="container">
+                    <div class="copyright-text text-center">&copy; 2021 PFPoop. All Rights Reserved.</div>
+                </div>
+            </div>
+        </footer>
+        <!-- end: Footer -->
+
+
+        <!-- Modal video-->
+        <div id="modalVideo" class="modal" style="max-width: 1140px; min-height:380px">
+            <div class="p-t-30 text-center">
+                <div class="video-wrap m-b-20">
+                    <video id="video-js" class="video-js" controls preload="false">
+                        <source src="https://cdns3.makewebvideo.com/data2/userfiles/public/jzbxfrchgaqyuzr8gqhyabvz/movie_68EyKhzRRFh7Nuyu.mp4.1920x1080.mp4" type="video/mp4" />
+                    </video>
+                </div>
+            </div>
+        </div>
+        <!--end: Modal video-->
+
+        <!-- Modal strip success-->
+        <div id="modalStripSuccess" class="modal-strip modal-top background-success">
+            <div class="container">
+                <div class="text-center" id="modalStripSuccessText">
+                </div>
+            </div>
+        </div>
+        <!-- end: Modal strip success-->
+
+        <!-- Modal strip warning-->
+        <div id="modalStripWarning" class="modal-strip modal-top background-warning">
+            <div class="container">
+                <div class="text-center" id="modalStripWarningText">
+                </div>
+            </div>
+        </div>
+        <!-- end: Modal strip success-->
+
+
+    </div> <!-- end: Body Inner -->
+    <!-- Scroll top -->
+    <a id="scrollTop"><i class="icon-chevron-up"></i><i class="icon-chevron-up"></i></a>
+    <!--Plugins-->
+    
+    <script src="js/plugins.js"></script>
+    <!--Template functions-->
+    <script src="js/functions.js"></script>
+    <script type="text/javascript" src="./main.js"></script>
+    <script defer data-domain="pfpoop.xyz" src="https://plausible.io/js/plausible.js"></script>
+</body>
+
+</html>

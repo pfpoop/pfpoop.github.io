@@ -1,17 +1,24 @@
-/* Moralis init code */
-
 //Contract const
+//MAINNET:
 const contAdd = '0x64386bf59bfBc2Be39D054b050b04CE6402Ed7e3'
 const mintPrice = "20";
+//MUMBAI:
+// const contAdd = "0x7ecdB14D809997E5014e8e57f76B71D052EA5Ac6"
+// const mintPrice = "0.002";
 
 //Moralis const
+//MAINNET:
 const serverUrl = "https://dcqxf0unkygd.usemoralis.com:2053/server";
 const appId = "l5z3JOEtDYFx0W74Wr3lolMKSrPJTdGfR8citW3T";
+//MUMBAI:
+// serverUrl = "https://hwxrp0nvfmvt.usemoralis.com:2053/server";
+// appId = "eJ8a8bFmASWX3vfjkowG2jDoJxHEIINVyznqzCKa";
 
 //IPFS const
 const imageBaseURL = "https://gateway.pinata.cloud/ipfs/QmbwHi18xeGvQCPCwY2meFwPx1rUcV1Sroz2GB2ee2x4Gd/"
 
 //Polygon const
+//MAINNET:
 const polyscanTrxBaseURL = "https://polygonscan.com/tx/"
 const networkId = 137;
 const networkIdHex = "0x89";
@@ -19,30 +26,49 @@ const networkName = "Polygon Mainnet";
 const rpc = "https://polygon-rpc.com";
 const blockExplorer = "https://polygonscan.com/";
 const chainName = "matic";
+//MUMBAI:
+// const polyscanTrxBaseURL = "https://mumbai.polygonscan.com/tx/"
+// const networkId = 80001;
+// const networkIdHex = "0x13881";
+// const networkName = "Polygon Testnet Mumbai";
+// const rpc = "https://matic-mumbai.chainstacklabs.com";
+// const blockExplorer = "https://mumbai.polygonscan.com/";
+// const chainName = "mumbai";
 
-//Others
+
+//OpenSea
+//MAINNET:
 const openSeaContractURL = "https://opensea.io/collection/pfpoop";
 
+
+var user;
 
 Moralis.start({ serverUrl, appId });
 
 
 
 async function login() {
-	let user = Moralis.User.current();
+	
+
+	user = Moralis.User.current();
 	console.log(user)
 	//   if (!user) {
 	user = await Moralis.authenticate({ signingMessage: "Login to PFPoop.xyz" })
 		.then(function (user) {
 			console.log("logged in user:", user);
 			console.log(user.get("ethAddress"));
-			document.getElementById("image-login").remove();
-			document.getElementById("column-login").innerHTML = '<div class="content has-text-centered is-size-4"><p style="word-wrap:break-word;">Address connected: ' + user.get("ethAddress") + '</p></div>';
-
 			const chainId = Moralis.chainId;
 			console.log("chainId: ", chainId); // 137 
-			if (chainId != '0x89') {
-				document.getElementById("column-login").innerHTML = '<div class="content has-text-centered is-size-4 has-text-danger"><p><a class="switchNetwork" onclick="switchNetwork()">Please switch Metamask on Polygon mainnet</a></p></div>';
+
+			if (chainId != networkIdHex) {
+				$( "#modalStripWarning" ).addClass("modal-active")
+				document.getElementById("modalStripWarningText").innerHTML = 'Please switch Metamask to Polygon Mainnet <a class="switchNetwork m-l-10 btn btn-light" onclick="switchNetwork()">Switch network</a>';
+			}
+			else{
+				$('#btn-mint').removeClass("disabled");
+				$( "#modalStripSuccess" ).addClass("modal-active")
+				document.getElementById("btn-login").remove();
+				document.getElementById("modalStripSuccessText").innerHTML = 'Address connected: ' + user.get("ethAddress") + '';
 			}
 		})
 		.catch(function (error) {
@@ -53,6 +79,11 @@ async function login() {
 
 async function mint() {
 	try {
+
+		//change button
+		let original_btn = $('#btn-mint').html();
+       	$('#btn-mint').html('<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>');
+		
 		//Web3 User Account 
 		await Moralis.enableWeb3();
 
@@ -63,9 +94,7 @@ async function mint() {
 			msgValue: Moralis.Units.ETH(mintPrice)
 		};
 
-		document.getElementById("image-mint").src = "./assets/pleasewait.gif";
-
-
+		
 
 		const transaction = await Moralis.executeFunction(options);
 		console.log("transaction: ", transaction);
@@ -76,38 +105,52 @@ async function mint() {
 			let tokenIdHex = result.events[1].args[2]._hex;
 			let tokenId = parseInt(tokenIdHex, 16);
 			let transactionHash = result.transactionHash;
-			document.getElementById("column-mint").innerHTML = '<div class="column is-half"><div class="content has-text-centered is-size-4"><img src="'+ imageBaseURL + tokenId + '.png"><p>Hooray! your are now the owner of PFPoop #' + tokenId + '</p><p><a href="'+polyscanTrxBaseURL+transactionHash+'" target="_blank">Check the transaction on Polyscan<a><p><a href="'+openSeaContractURL+'" target="_blank">Check your Poop on OpenSea</a></p></div></div>'
+			$('#btn-mint').html(original_btn); //back original button
+			document.getElementById("column-mint").innerHTML = '<img src="'+ imageBaseURL + tokenId + '.png"><h3>Hooray! your are now the owner of PFPoop #' + tokenId + '</h3><p><a href="'+polyscanTrxBaseURL+transactionHash+'" target="_blank">Check the transaction on Polyscan<a><p><a href="'+openSeaContractURL+'" target="_blank">Check your Poop on OpenSea</a></p>'
 		}
 	}
 	catch (err) {
-		document.getElementById("image-mint").src = "./assets/mint_fire.gif";
+		$('#btn-mint').html(original_btn); //back original button
 		console.log(err);
-		alert(err.data.message);
 	}
 
 }
 
 async function getSupply() {
 	console.log("getsupply")
-	const options = {
-		chain: chainName,
-		address: contAdd,
-		function_name: "totalSupply",
-		abi: abi
-	};
-	const allowance = await Moralis.Web3API.native.runContractFunction(options);
-	console.log(allowance);
-	document.getElementById("js-total-supply").innerHTML = allowance;
+	try{
+		const options = {
+			chain: chainName,
+			address: contAdd,
+			function_name: "totalSupply",
+			abi: abi
+		};
+		const supply = await Moralis.Web3API.native.runContractFunction(options);
+		console.log(supply);
+		document.getElementById("js-total-supply").innerHTML = supply;
+	}
+	catch(err){
+		console.log(err);
+	}
 }
 
 async function switchNetwork() {
 	try {
+		user = Moralis.User.current();
+
 		await web3.currentProvider.request({
 			method: "wallet_switchEthereumChain",
 			params: [{ chainId: networkIdHex }],
 		});
-		document.getElementById("column-login").innerHTML = '<div class="content has-text-centered is-size-4"><p style="word-wrap:break-word;">Your are now connected on Polygon Mainnet!</p></div>';
+		$( "#modalStripWarning" ).removeClass("modal-active")
+		document.getElementById("btn-login").remove();
+		document.getElementById("modalStripSuccessText").innerHTML = 'Address connected: ' + user.get("ethAddress") + '';
+		$( "#modalStripSuccess" ).addClass("modal-active")
+		$('#btn-mint').removeClass("disabled");
+		console.log("remove")
+
 	} catch (error) {
+		console.log(error);
 		if (error.code === 4902) {
 			try {
 				await web3.currentProvider.request({
@@ -126,7 +169,12 @@ async function switchNetwork() {
 						},
 					],
 				});
-				document.getElementById("column-login").innerHTML = '<div class="content has-text-centered is-size-4"><p style="word-wrap:break-word;">Your are now connected on Polygon Mainnet!</p></div>';
+				$( "#modalStripWarning" ).removeClass("modal-active")
+				document.getElementById("btn-login").remove();
+				document.getElementById("modalStripSuccessText").innerHTML = 'Address connected: ' + user.get("ethAddress") + '';
+				$( "#modalStripSuccess" ).addClass("modal-active")
+				$('#btn-mint').removeClass("disabled");
+				console.log("remove")
 			} catch (error) {
 				alert(error.message);
 			}
@@ -136,9 +184,6 @@ async function switchNetwork() {
 
 document.getElementById("btn-login").onclick = login;
 document.getElementById("btn-mint").onclick = mint;
-// document.getElementById("btn-switchNetwork").onclick = switchNetwork;
-
-new snowflakeCursor();
 
 
 
@@ -823,193 +868,6 @@ const abi = [
 ]
 
 
-
-
-
-
-
-function snowflakeCursor(options) {
-	let hasWrapperEl = options && options.element
-	let element = hasWrapperEl || document.body
-
-	let possibleEmoji = ["❄️"]
-	let width = window.innerWidth
-	let height = window.innerHeight
-	let cursor = { x: width / 2, y: width / 2 }
-	let particles = []
-	let canvas, context
-
-	let canvImages = []
-
-	function init() {
-		canvas = document.createElement("canvas")
-		context = canvas.getContext("2d")
-
-		canvas.style.top = "0px"
-		canvas.style.left = "0px"
-		canvas.style.pointerEvents = "none"
-
-		if (hasWrapperEl) {
-			canvas.style.position = "absolute"
-			element.appendChild(canvas)
-			canvas.width = element.clientWidth
-			canvas.height = element.clientHeight
-		} else {
-			canvas.style.position = "fixed"
-			document.body.appendChild(canvas)
-			canvas.width = width
-			canvas.height = height
-		}
-
-		context.font = "12px serif"
-		context.textBaseline = "middle"
-		context.textAlign = "center"
-
-		possibleEmoji.forEach((emoji) => {
-			let measurements = context.measureText(emoji)
-			let bgCanvas = document.createElement("canvas")
-			let bgContext = bgCanvas.getContext("2d")
-
-			bgCanvas.width = measurements.width
-			bgCanvas.height = measurements.actualBoundingBoxAscent * 2
-
-			bgContext.textAlign = "center"
-			bgContext.font = "12px serif"
-			bgContext.textBaseline = "middle"
-			bgContext.fillText(
-				emoji,
-				bgCanvas.width / 2,
-				measurements.actualBoundingBoxAscent
-			)
-
-			canvImages.push(bgCanvas)
-		})
-
-		bindEvents()
-		loop()
-	}
-
-	// Bind events that are needed
-	function bindEvents() {
-		element.addEventListener("mousemove", onMouseMove)
-		element.addEventListener("touchmove", onTouchMove)
-		element.addEventListener("touchstart", onTouchMove)
-		window.addEventListener("resize", onWindowResize)
-	}
-
-	function onWindowResize(e) {
-		width = window.innerWidth
-		height = window.innerHeight
-
-		if (hasWrapperEl) {
-			canvas.width = element.clientWidth
-			canvas.height = element.clientHeight
-		} else {
-			canvas.width = width
-			canvas.height = height
-		}
-	}
-
-	function onTouchMove(e) {
-		if (e.touches.length > 0) {
-			for (let i = 0; i < e.touches.length; i++) {
-				addParticle(
-					e.touches[i].clientX,
-					e.touches[i].clientY,
-					canvImages[Math.floor(Math.random() * canvImages.length)]
-				)
-			}
-		}
-	}
-
-	function onMouseMove(e) {
-		if (hasWrapperEl) {
-			const boundingRect = element.getBoundingClientRect()
-			cursor.x = e.clientX - boundingRect.left
-			cursor.y = e.clientY - boundingRect.top
-		} else {
-			cursor.x = e.clientX
-			cursor.y = e.clientY
-		}
-
-		addParticle(
-			cursor.x,
-			cursor.y,
-			canvImages[Math.floor(Math.random() * possibleEmoji.length)]
-		)
-	}
-
-	function addParticle(x, y, img) {
-		particles.push(new Particle(x, y, img))
-	}
-
-	function updateParticles() {
-		context.clearRect(0, 0, width, height)
-
-		// Update
-		for (let i = 0; i < particles.length; i++) {
-			particles[i].update(context)
-		}
-
-		// Remove dead particles
-		for (let i = particles.length - 1; i >= 0; i--) {
-			if (particles[i].lifeSpan < 0) {
-				particles.splice(i, 1)
-			}
-		}
-	}
-
-	function loop() {
-		updateParticles()
-		requestAnimationFrame(loop)
-	}
-
-	/**
-	 * Particles
-	 */
-
-	function Particle(x, y, canvasItem) {
-		const lifeSpan = Math.floor(Math.random() * 60 + 80)
-		this.initialLifeSpan = lifeSpan //
-		this.lifeSpan = lifeSpan //ms
-		this.velocity = {
-			x: (Math.random() < 0.5 ? -1 : 1) * (Math.random() / 2),
-			y: 1 + Math.random(),
-		}
-		this.position = { x: x, y: y }
-		this.canv = canvasItem
-
-		this.update = function (context) {
-			this.position.x += this.velocity.x
-			this.position.y += this.velocity.y
-			this.lifeSpan--
-
-			this.velocity.x += ((Math.random() < 0.5 ? -1 : 1) * 2) / 75
-			this.velocity.y -= Math.random() / 300
-
-			const scale = Math.max(this.lifeSpan / this.initialLifeSpan, 0)
-
-			const degrees = 2 * this.lifeSpan
-			const radians = degrees * 0.0174533 // not perfect but close enough
-
-			context.translate(this.position.x, this.position.y)
-			context.rotate(radians)
-
-			context.drawImage(
-				this.canv,
-				(-this.canv.width / 2) * scale,
-				-this.canv.height / 2,
-				this.canv.width * scale,
-				this.canv.height * scale
-			)
-
-			context.rotate(-radians)
-			context.translate(-this.position.x, -this.position.y)
-		}
-	}
-
-	init()
-}
 
 
 
