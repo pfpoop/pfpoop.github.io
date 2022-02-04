@@ -1,7 +1,7 @@
 //Contract const
 //MAINNET:
 const contAdd = '0x64386bf59bfBc2Be39D054b050b04CE6402Ed7e3'
-const mintPrice = "20";
+const mintPrice = "10";
 //MUMBAI:
 // const contAdd = "0x7ecdB14D809997E5014e8e57f76B71D052EA5Ac6"
 // const mintPrice = "0.002";
