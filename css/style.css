@@ -18466,3 +18466,16 @@ body[data-bg-image] {
 }
 
 
+.sold-stamp {
+  transform: rotate(-3deg);
+	color: #9c0315;
+	font-weight: 700;
+  font-size: 2rem;
+  color: #9c0315 !important;
+	border: 0.7rem solid #9c0315;
+	display: inline-block;
+	padding: 0.5rem 1rem;
+	border-radius: 1rem;
+  margin-bottom: 30px;
+  /* margin-top: -100px; */
+}
