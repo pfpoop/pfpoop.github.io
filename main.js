@@ -1,35 +1,47 @@
+
 //Contract const
 //MAINNET:
 const contAdd = '0x64386bf59bfBc2Be39D054b050b04CE6402Ed7e3'
-const mintPrice = "10";
+const mintPrice = "20";
+const mintEthPrice = 0.01;
 //MUMBAI:
 // const contAdd = "0x7ecdB14D809997E5014e8e57f76B71D052EA5Ac6"
 // const mintPrice = "0.002";
+// const mintEthPrice = 0.01;
 
 //Moralis const
 //MAINNET:
-const serverUrl = "https://dcqxf0unkygd.usemoralis.com:2053/server";
-const appId = "l5z3JOEtDYFx0W74Wr3lolMKSrPJTdGfR8citW3T";
+const serverUrl = "https://ijtvhruz5ssb.usemoralis.com:2053/server";
+const appId = "p3bbPnA4LA2F6fTA3vxZMfkWJnsospJHAYdMdPK9";
 //MUMBAI:
-// serverUrl = "https://hwxrp0nvfmvt.usemoralis.com:2053/server";
-// appId = "eJ8a8bFmASWX3vfjkowG2jDoJxHEIINVyznqzCKa";
+// serverUrl = "https://q5qnkaomksom.usemoralis.com:2053/server";
+// appId = "2il9DVR04QFBtSV0a6poEl6P1lk3dmIOTEskQvpa";
 
 //IPFS const
 const imageBaseURL = "https://gateway.pinata.cloud/ipfs/QmbwHi18xeGvQCPCwY2meFwPx1rUcV1Sroz2GB2ee2x4Gd/"
 
+//admin address
+const adminAdd = "0x09c9A749964520D343f85d3163e1654F1BCd0E39";
+
 //Polygon const
 //MAINNET:
 const polyscanTrxBaseURL = "https://polygonscan.com/tx/"
+const polyscanAddressBaseURL = "https://polygonscan.com/address/"
 const networkId = 137;
 const networkIdHex = "0x89";
+const ethNetworkId = 1;
+const ethNetwrokHex = "0x1";
 const networkName = "Polygon Mainnet";
 const rpc = "https://polygon-rpc.com";
 const blockExplorer = "https://polygonscan.com/";
 const chainName = "matic";
 //MUMBAI:
 // const polyscanTrxBaseURL = "https://mumbai.polygonscan.com/tx/"
+// const polyscanAddressBaseURL = "https://mumbai.polygonscan.com/address/"
 // const networkId = 80001;
 // const networkIdHex = "0x13881";
+// const ethNetworkId = 4;
+// const ethNetwrokHex = "0x4";
 // const networkName = "Polygon Testnet Mumbai";
 // const rpc = "https://matic-mumbai.chainstacklabs.com";
 // const blockExplorer = "https://mumbai.polygonscan.com/";
@@ -45,11 +57,30 @@ var user;
 
 Moralis.start({ serverUrl, appId });
 
+Moralis.onAccountChanged(function(accounts) {
+	console.log("AccountChanged");
+    resetView();
+});
+
+Moralis.onChainChanged(function(accounts) {
+    console.log("chainChanged");
+	resetView();
+});
+
+function resetView(){
+	Moralis.User.logOut();
+	$("#btn-login").show();
+	$( "#modalStripSuccess" ).removeClass("modal-active")
+	$("#mint-warning").html('connect your wallet first')
+	$("#mintEthereum-warning").html('connect your wallet first')
+	$('#btn-mint').addClass("disabled");
+	$('#btn-mintEthereum').addClass("disabled");
+	$("#modalStripWarning").removeClass("modal-active");
+}
 
 
 async function login() {
 	
-
 	user = Moralis.User.current();
 	console.log(user)
 	//   if (!user) {
@@ -60,16 +91,36 @@ async function login() {
 			const chainId = Moralis.chainId;
 			console.log("chainId: ", chainId); // 137 
 
-			if (chainId != networkIdHex) {
-				$( "#modalStripWarning" ).addClass("modal-active")
-				document.getElementById("modalStripWarningText").innerHTML = 'Please switch Metamask to Polygon Mainnet <a class="switchNetwork m-l-10 btn btn-light" onclick="switchNetwork()">Switch network</a>';
+			if (chainId == networkIdHex){
+				console.log("Polygon")
+				$("#btn-login").hide();
+				$( "#modalStripSuccess" ).addClass("modal-active")
+				$("#modalStripSuccessText").html('Address connected: ' + user.get("ethAddress") + ' (Polygon Network)');
+				$("#mint-warning").html('Ready to mint!')
+				$("#mintEthereum-warning").html('Switch to Ethereum')
+				$('#btn-mint').removeClass("disabled");
+				getNFTsForContract()
+				setTimeout(() => {$( "#modalStripSuccess" ).removeClass("modal-active")}, 10000);
+				
+			}
+			else if (chainId == ethNetwrokHex){
+				console.log("Ethereum")
+				$("#btn-login").hide();
+				$( "#modalStripSuccess" ).addClass("modal-active")
+				$("#modalStripSuccessText").html('Address connected: ' + user.get("ethAddress") + ' (Ethereum Network)');
+				$("#mintEthereum-warning").html('Ready to mint!')
+				$("#mint-warning").html('Switch to Polygon')
+				$('#btn-mintEthereum').removeClass("disabled");
+				getNFTsForContract()
+				setTimeout(() => {$( "#modalStripSuccess" ).removeClass("modal-active")}, 10000);
+				
 			}
 			else{
-				$('#btn-mint').removeClass("disabled");
-				$( "#modalStripSuccess" ).addClass("modal-active")
-				document.getElementById("btn-login").remove();
-				document.getElementById("modalStripSuccessText").innerHTML = 'Address connected: ' + user.get("ethAddress") + '';
-			}
+				console.log("network unknow")
+				$("#btn-login").hide();
+				$( "#modalStripWarning" ).addClass("modal-active")
+				$("#modalStripWarningText").html('Switch Metamask to <b>Polygon Mainnet</b>  or <b>Ethereum Mainnet</b>');
+				}
 		})
 		.catch(function (error) {
 			console.log(error);
@@ -106,7 +157,7 @@ async function mint() {
 			let tokenId = parseInt(tokenIdHex, 16);
 			let transactionHash = result.transactionHash;
 			$('#btn-mint').html(original_btn); //back original button
-			document.getElementById("column-mint").innerHTML = '<img src="'+ imageBaseURL + tokenId + '.png"><h3>Hooray! your are now the owner of PFPoop #' + tokenId + '</h3><p><a href="'+polyscanTrxBaseURL+transactionHash+'" target="_blank">Check the transaction on Polyscan<a><p><a href="'+openSeaContractURL+'" target="_blank">Check your Poop on OpenSea</a></p>'
+			$("#column-mint").html('<img src="./assets/poop/' + tokenId + '.png"><h3 class="text-light">Hooray! your are now the owner of PFPoop #' + tokenId + '</h3><p><a href="'+polyscanTrxBaseURL+transactionHash+'" target="_blank">Check the transaction on Polyscan<a><p><a href="'+openSeaContractURL+'" target="_blank">Check your Poop on OpenSea</a></p>');
 		}
 	}
 	catch (err) {
@@ -114,6 +165,95 @@ async function mint() {
 		console.log(err);
 	}
 
+}
+
+
+async function MintEthereum(){
+	try{
+		console.log("MintEthereum")
+
+		
+       	$('#btn-mintEthereum').html('<span class="spinner-border spinner-border" role="status" aria-hidden="true"></span>');
+
+
+		// sending 0.5 ETH
+		const options = {type: "native", amount: Moralis.Units.ETH(mintEthPrice), receiver: adminAdd}
+		let transaction = await Moralis.transfer(options)
+		console.log(transaction);
+		$('.mintEthereumLog').show();
+		EthTransactionsSubscription()
+		PolygonNFTTransfersSubscription()
+		// let result = await transaction.wait(5);
+		// console.log(result);
+	}
+	catch(err){
+		console.log(err);
+		$('#btn-mintEthereum').html('<i class="fa fa-rocket"></i> MINT NOW! <i class="fa fa-rocket"></i>');
+
+	}
+}
+
+async function EthTransactionsSubscription(){
+    try{
+		console.log("enter EthTransactionsSubscription")
+		user = Moralis.User.current();
+        let query = new Moralis.Query('EthTransactions');
+        let subscription = await query.subscribe();
+        
+        subscription.on('open', () => {
+        	console.log('EthTransactionsSubscription opened');
+        });
+        
+		subscription.on('update', (object) => {
+            try{
+                console.log('EthTransactions updated');
+                console.log(object);
+				if ( (object.get("from_address") == user.get("ethAddress")) && (object.get("to_address") == adminAdd.toLowerCase()) && (object.get("confirmed") == false)){
+					$('#wait-transaction').html('<i class="fa fa-check"></i> Transaction found!');
+				}
+				if ( (object.get("from_address") == user.get("ethAddress")) && (object.get("to_address") == adminAdd.toLowerCase()) && (object.get("confirmed") == true)){
+					$('#wait-confirmation').html('<i class="fa fa-check"></i> Transaction confirmed!');
+				}               
+            }
+            catch(err){
+                console.log(err)
+            }
+        });
+    }
+    catch(err){
+        console.log(err)
+    }
+}
+
+async function PolygonNFTTransfersSubscription(){
+    try{
+		console.log("enter PolygonNFTTransfersSubscription")
+		user = Moralis.User.current();
+        let query = new Moralis.Query('TransferEvent');
+        let subscription = await query.subscribe();
+        
+        subscription.on('open', () => {
+        	console.log('PolygonNFTTransfersSubscription opened');
+        });
+        
+		subscription.on('update', (object) => {
+            try{
+                console.log('TransferEvent updated');
+                console.log(object);            
+				if ( (object.get("address") == contAdd.toLowerCase()) && (object.get("to") == user.get("ethAddress")) ){
+					$('#btn-mintEthereum').hide();
+					$('#wait-nft').html('<i class="fa fa-check"></i> NFT transfered!');
+					$("#column-mint").html('<img src="./assets/poop/' + object.get("tokenId") + '.png"><h3 class="text-light">Hooray! your are now the owner of PFPoop #' + object.get("tokenId")  + '</h3><p><a href="'+polyscanTrxBaseURL+object.get("transaction_hash")+'" target="_blank">Check the transaction on Polyscan<a><p><a href="'+openSeaContractURL+'" target="_blank">Check your Poop on OpenSea</a></p>');
+				}
+            }
+            catch(err){
+                console.log(err)
+            }
+        });
+    }
+    catch(err){
+        console.log(err)
+    }
 }
 
 async function getSupply() {
@@ -143,8 +283,8 @@ async function switchNetwork() {
 			params: [{ chainId: networkIdHex }],
 		});
 		$( "#modalStripWarning" ).removeClass("modal-active")
-		document.getElementById("btn-login").remove();
-		document.getElementById("modalStripSuccessText").innerHTML = 'Address connected: ' + user.get("ethAddress") + '';
+		$("#btn-login").hide();
+		$("#modalStripSuccessText").html('Address connected: ' + user.get("ethAddress") + '');
 		$( "#modalStripSuccess" ).addClass("modal-active")
 		$('#btn-mint').removeClass("disabled");
 		console.log("remove")
@@ -182,10 +322,70 @@ async function switchNetwork() {
 	}
 }
 
+
+async function getNFTsForContract() {
+	try {
+		user = Moralis.User.current();
+		const options = { chain: chainName, address: user.get("ethAddress"), token_address: contAdd };
+		const polygonNFTs = await Moralis.Web3API.account.getNFTsForContract(options);
+		console.log(polygonNFTs);
+		let result = polygonNFTs.result;
+		$('#row-asset').show();
+		result.forEach(element => {
+			console.log(element.token_id)
+			$('#row-asset')
+			.append('<div class="col text-center align-self-center"><img src="./assets/poop/'+ element.token_id + '.png"><p class="text-light">PFPoop #'+ element.token_id +'</p></div>')
+			.children(':last')
+			.hide()
+			.fadeIn(2000);
+		});
+	}
+	catch(err){
+		console.log(err);
+	}
+}
+
+async function nftOwners() {
+	try {
+		const options = { address: contAdd, chain: chainName };
+		const nftOwners = await Moralis.Web3API.token.getNFTOwners(options);
+		console.log(nftOwners);
+		let random = getRandomArbitrary(1, nftOwners.result.length);
+		for (let i = 0; i < 5; i++) {
+			$('.carousel-'+(i+1)+'-img').attr("src","assets/poop/"+nftOwners.result[random[i]].token_id+".png");
+			$('.carousel-'+(i+1)+'-owned').html('<a target="_blank" href="'+polyscanAddressBaseURL+nftOwners.result[random[i]].owner_of+'">'+substrAddress(nftOwners.result[random[i]].owner_of))+'"</a>';
+			$('.carousel-'+(i+1)+'-pfpoop').html("PFPoop #"+nftOwners.result[random[i]].token_id);
+		}
+	}
+	catch(err){
+		console.log(err);
+	}
+}
+
+function getRandomArbitrary(min, max) {
+	let random = []
+	for (let i = 1; i < 6; i++){
+		random.push(parseInt(Math.random() * (max - min) + min))
+	}
+	return random;
+
+  }
+
+function substrAddress(address){
+	try{
+		let lenght = address.length;
+		let begin = address.substr(0, 7)
+		let end = address.substr(lenght-8, lenght)
+		return begin + '(..)' + end;
+	}
+	catch(err){
+		console.log(err);
+	}
+}
+
 document.getElementById("btn-login").onclick = login;
 document.getElementById("btn-mint").onclick = mint;
-
-
+document.getElementById("btn-mintEthereum").onclick = MintEthereum;
 
 
 
@@ -871,6 +1071,5 @@ const abi = [
 
 
 
+nftOwners()
 getSupply()
-
-
