@@ -18491,3 +18491,103 @@ body[data-bg-image] {
 .custom-portfolio-description h5{
   font-size: 1rem;
 }
+
+
+.fixedDiv{
+  position: fixed;
+  top: 0px;
+  right: 0px; 
+  padding: 20px;
+  z-index: 10;
+}
+.fixedbutton{
+  z-index: 10;
+}
+
+
+.sidebar-custom {
+  width: 550px;
+  position: fixed;
+  top: 0;
+  bottom: 0;
+  right: 0;
+  padding-top: 30px;
+  background-color: rgba(0, 0, 0, 0.9);
+  /* color: #bbbbbb; */
+  transition: 500ms;
+  z-index: 10;
+  padding-left: 15px;
+  overflow-y: auto;
+
+}
+
+.sidebar-custom p{
+  color:rgba(255, 255, 255);
+  padding-left: 10px;
+}
+
+.sidebar-custom label{
+  font-size: 1.2rem;
+  color: #C2C2C2;
+}
+
+.sidebar-custom hr{
+  /* color:rgb(255, 255, 255); */
+  border-top: 1px solid rgba(255, 255, 255, 0.5);
+}
+
+.sidebar-custom h4{
+  margin-top: 20px;
+}
+
+
+.sidebar-custom.menu-1 {
+  right: -550px;
+}
+
+@media (max-width: 768px) {
+  .sidebar-custom {
+    width: 100%;
+    position: fixed;
+    top: 0;
+    bottom: 0;
+    right: 0;
+    padding-top: 30px;
+    background-color: rgba(0, 0, 0, 0.9);
+    /* color: #bbbbbb; */
+    transition: 500ms;
+    z-index: 10;
+    padding-left: 15px;
+    padding-right: 15px;
+    overflow-y: auto;
+  
+  }
+  
+}
+
+.logo-wallet-box{
+  display: inline-block;
+  padding: 10px;
+  border: 1px solid #e6e8eb;
+  border-radius: 5px;
+  /* background-color: transparent; */
+  background-color: #fcfcfc;
+  width: 300px;
+  margin: 10px;
+  text-transform: uppercase;
+  font-size: 15px;
+  font-weight: 400;
+  letter-spacing: 0.6px;
+  text-align: center;
+  cursor: pointer;
+}
+
+
+.logo-wallet-box img{
+  height: 35px;
+}
+@media (max-width: 768px) {
+  .chart-img{
+    max-width: 100%;
+  }
+}

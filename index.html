@@ -9,14 +9,14 @@
     <title>PFPoop, mintable poop collectible</title>
     <meta name="title" content="PFPoop, mintable poop collectible">
     <meta name="description"
-      content="The Web3.0 revolution is now! PFPoop is a mintable collection of 999 unique poops handle by the Polygon blockchain and IPFS">
+      content="PFPoop is a mintable collection of 999 unique poops handle by the Polygon blockchain and IPFS">
   
     <!-- Open Graph / Facebook -->
     <meta property="og:type" content="website">
     <meta property="og:url" content="https://pfpoop.xyz/">
     <meta property="og:title" content="PFPoop, mintable poop collectible">
     <meta property="og:description"
-      content="The Web3.0 revolution is now! PFPoop is a mintable collection of 999 unique poops handle by the Polygon blockchain and IPFS">
+      content="PFPoop is a mintable collection of 999 unique poops handle by the Polygon blockchain and IPFS">
     <meta property="og:image" content="https://pfpoop.xyz/assets/favicon.png">
   
     <!-- Twitter -->
@@ -24,7 +24,7 @@
     <meta property="twitter:url" content="https://pfpoop.xyz/">
     <meta property="twitter:title" content="PFPoop, mintable poop collectible">
     <meta property="twitter:description"
-      content="The Web3.0 revolution is now! PFPoop is a mintable collection of 999 unique poops handle by the Polygon blockchain and IPFS">
+      content="PFPoop is a mintable collection of 999 unique poops handle by the Polygon blockchain and IPFS">
     <meta property="twitter:image" content="https://pfpoop.xyz/assets/favicon.png">
   
     <link rel="icon" type="image/x-icon" href="/assets/favicon.png">
@@ -32,20 +32,21 @@
   
     <script src="https://unpkg.com/moralis/dist/moralis.js"></script>
     <script src="https://unpkg.com/moralis@0.0.184/dist/moralis.js"></script>
+    <script src="https://github.com/WalletConnect/walletconnect-monorepo/releases/download/1.7.1/web3-provider.min.js"></script>
     <script src="js/jquery.js"></script>
 
     <!-- Primary Meta Tags -->
     <title>PFPoop, mintable poop collectible</title>
     <meta name="title" content="PFPoop, mintable poop collectible">
     <meta name="description"
-      content="The Web3.0 revolution is now! PFPoop is a mintable collection of 999 unique poops handle by the Polygon blockchain and IPFS">
+      content="PFPoop is a mintable collection of 999 unique poops handle by the Polygon blockchain and IPFS">
   
     <!-- Open Graph / Facebook -->
     <meta property="og:type" content="website">
     <meta property="og:url" content="https://pfpoop.xyz/">
     <meta property="og:title" content="PFPoop, mintable poop collectible">
     <meta property="og:description"
-      content="The Web3.0 revolution is now! PFPoop is a mintable collection of 999 unique poops handle by the Polygon blockchain and IPFS">
+      content="PFPoop is a mintable collection of 999 unique poops handle by the Polygon blockchain and IPFS">
     <meta property="og:image" content="https://pfpoop.xyz/assets/favicon.png">
   
     <!-- Twitter -->
@@ -53,7 +54,7 @@
     <meta property="twitter:url" content="https://pfpoop.xyz/">
     <meta property="twitter:title" content="PFPoop, mintable poop collectible">
     <meta property="twitter:description"
-      content="The Web3.0 revolution is now! PFPoop is a mintable collection of 999 unique poops handle by the Polygon blockchain and IPFS">
+      content="PFPoop is a mintable collection of 999 unique poops handle by the Polygon blockchain and IPFS">
     <meta property="twitter:image" content="https://pfpoop.xyz/assets/favicon.png">
   
     <link rel="icon" type="image/x-icon" href="/assets/favicon.png">
@@ -70,59 +71,84 @@
 
 
 <body>
+    <div class="fixedDiv" >
+       <button class="btn btn-success btn-lg" id="menuToggle"><i class="fa fa-sign-in-alt"></i> Connect wallet</button>
+    </div>
+
+    
+
     <!-- Body Inner -->
     <div class="body-inner">
-        <!-- Topbar -->
-        <div id="topbar" class="topbar-transparent topbar-fullwidth dark d-none d-xl-block d-lg-block">
-            <div class="container">
-                <div class="row">
-                    <div class="col-md-6">
-                        <ul class="top-menu">
-                            <li><a href="#">Email: contact@pfpoop.xyz</a></li>
-                        </ul>
-                    </div>
-                    <div class="col-md-6 d-none d-sm-block">
-                        <div class="social-icons social-icons-colored-hover">
-                            <ul>
-                                    <li class="social-twitter"><a href="https://twitter.com/pfpoop_xyz"><i class="fab fa-twitter"></i></a></li>
-                                    </ul>
-                        </div>
-                    </div>
+
+
+        <!-- right menu-->
+        <div class="sidebar-custom menu-1" id="menu-1">
+            <i class="icon-arrow-right-circle close-menu text-light" style="font-size: 40px; cursor: pointer;"></i>
+            <br>
+            <br>
+            <div class="before-login">
+                <h4 class="text-light text-center">CHOOSE WALLET</h4>
+                <div class="text-center">
+                    <a class="metamask-login" onclick="login('metamask')">
+                        <div class="logo-wallet-box"><img src="/assets/metamask_color_transparent.png"
+                                class="logo-wallet"><br>Metamask</div>
+                    </a>
+                </div>
+
+                <div class="text-center">
+                    <a class="walletconnect-login" onclick="login('walletconnect')">
+                        <div class="logo-wallet-box"><img class="logo-wallet"
+                                src="assets/walletconnect_color_transparent.png"><br>Walletconnect</div>
+                    </a>
                 </div>
             </div>
-        </div>
-        <!-- end: Topbar -->
-        <!-- Header -->
-        <header id="header" data-transparent="true" data-fullwidth="true" class="dark submenu-light">
-         
-        </header>
-        <!-- end: Header -->
 
+            <div class="after-login" style="display:none">
+                <label>Address connected</label>
+                <p id="address-connected"></p>
+                <label>Chain</label>
+                <p id="network-connected"></p>
+
+                <hr>
+
+                    <h4 class="text-light text-center">Your crypto</h4>
+                    
+                    <label>ETH (Ethereum)</label>
+                    <p id="eth-balance">0</p>
+                    <label>MATIC (Polygon)</label>
+                    <p id="matic-balance">0</p>
+                    <label>$POOP (Polygon)</label>
+                    <p id="poop-balance">0</p>
+
+
+                <hr>
+
+                <div id="dashboard-asset" style="display: none;">
+                    <h4 class="text-light text-center">Your poops</h4>
+                    <div class="row" style="margin: 0" id="dashboard-asset-row">
+                    </div>
+                </div>
+
+            </div>
+        </div>
+        <!-- END: right menu-->
 
         <!-- Hero banner -->
-        <!-- <section class="fullscreen" style="padding-top: 0px;">
-            <div class="bg-overlay" data-style="13"></div>
-            <div class="shape-divider" data-style="4"></div>-->
-            <div id="slider" class="inspiro-slider slider-fullscreen">
-            
-            <!-- Slide 1 -->
+        <div id="slider" class="inspiro-slider slider-fullscreen">
             <div class="slide" data-bg-video="https://cdns3.makewebvideo.com/data2/userfiles/public/jzbxfrchgaqyuzr8gqhyabvz/movie_GB7Ey7D4Dkp2NyZG.mp4.1920x1080.mp4">
                 <div class="bg-overlay"></div>
                 <div class="container">
                     <div class="slide-captions text-left text-light">
-                        <!-- Captions -->
                         <h2 class="text-uppercase text-lg">PFPoop</h2>
-                        <p class="text-small">The Web3.0 revolution is now! PFPoop is a collection of 999 unique poops handle by Polygon blockchain</p>
+                        <p class="text-small">PFPoop is a collection of 999 unique poops handle by Polygon blockchain</p>
                         <div>
                             <div><a href="#modalVideo" data-lightbox="inline" class="btn btn-lg"><i class="fa fa-play"></i> badass trailer</a></div>
                         </div>
-                        <!-- end: Captions -->
                     </div>
                 </div>
             </div>
-            <!-- end: Hero banner -->
         </div>
-        <!-- </section> -->
+        <!-- end: Hero banner -->
 
         <!-- section mint-->
         <section class="fullscreen" data-bg-image="assets/poop/22.png">
@@ -130,24 +156,18 @@
             <div class="shape-divider" data-style="7" data-position="top" data-flip-vertical="true"></div>
             <div class="shape-divider" data-style="7"></div>
             <div class="container">
-                <!-- <div class="container-fullscreen"> -->
-                    <!-- <div class="text-middle"> -->
                     <div class="row">
                         <div class="heading-text text-light col-lg-6">
                             <h2 class="font-weight-800"><span>Minting is open!</span></h2>
                             <p>Mint price is currently <b>20 MATIC</b> or <b>0.01 ETH</b></p>
                             <!-- <span class="sold-stamp">50% off for 48h!</span> -->
                             <!-- <p>Mint price is currently <b>10 MATIC</b> (~0.006 ETH)</p> -->
-                            <p><i class="fa fa-info-circle"></i> Mint price increses by 20 MATIC every 100 mints</p>
-                            <a class="scroll-to" href="#to-fomo"><button class="btn btn-light btn-outline btn-rounded">Read More</button></a>
-                        </div>
-                        <div class="col-lg-6 text-light text-center align-self-center">
-                                    <a class="btn btn-lg" id="btn-login"><i class="fa fa-sign-in-alt"></i> Connect Wallet</a>
-                            <br><br>                    
-           
+                            <p><i class="fa fa-info-circle"></i> Mint price increses by 10 MATIC every 100 mints <a class="scroll-to" href="#to-fomo"><button class="btn btn-light btn-outline btn-rounded">Read More</button></a></p>
+                            <p><i class="fa fa-info-circle"></i> Each minted PFPoop rewards you of 100 $POOP tokens <a class="scroll-to" href="#to-tokenomics"><button class="btn btn-light btn-outline btn-rounded">Read More</button></a></p>
                             
+                        </div>
 
-
+                        <div class="col-lg-6 text-light text-center align-self-center"> 
                             <div class="tabs tabs-folder">
                                 <ul class="nav nav-tabs nav-justified" id="myTab2" role="tablist">
                                     <li class="nav-item">
@@ -176,18 +196,17 @@
                                 </div>
                             </div>
 
+                            <!-- validated mint -->
                             <div id="column-mint">
-
                             </div>
+                            <!-- end: validated mint -->
+
                         </div>
                     </div>
 
-                    <div class="row" id="row-asset" style="display: none; margin-top: 30px;">
-                        <div class="heading-text text-light col-12">
-                        <h4 class="font-weight-800 text-center"><span>Your minted Poops</span></h4>
-                        </div>
-                    </div>
-                <!-- </div> -->
+                    
+
+
             </div>
         </section>
         <!-- end: section mint-->
@@ -197,10 +216,7 @@
             <div class="heading-text">
                 <h2 class="font-weight-800 text-center"><span id="js-total-supply">?</span> of 999 minted</h2>
             </div>
-            <!-- <div class="container"> -->
-                <!-- <div class="container-fullscreen"> -->
-                    <!-- <div class="text-middle"> -->
-                         <!--Portfolio Carousel -->
+
                 <div class="carousel" data-items="5">
    
                     <div class="portfolio-item">
@@ -269,22 +285,20 @@
                         </div>
                     </div>
                 </div>
-                    <!-- </div> -->
-                <!-- </div> -->
-            <!-- </div> -->
+
         </section>
 
 
-        <!-- Section -->
-        <section class="fullscreen" data-bg-image="assets/poop/930.png">
+        <!-- Section FOMO table-->
+        <section class="fullscreen" data-bg-image="assets/poop/45.png">
             <div class="bg-overlay" data-style="4"></div>
             <div class="shape-divider" data-style="4" data-position="top" data-flip-vertical="true"></div>
             <div class="shape-divider" data-style="4"></div>
             <div class="container">
                 <div class="row">
                     <div class="heading-text text-light col-lg-6">
-                        <h2 class="font-weight-800" id="to-fomo"><span>FOMO table</span></h2>
-                        <p>Mint price increses by 20 MATIC every 100 mints, get your Poop ASAP ! (wow, much fear!)</p>
+                        <h2 class="font-weight-800" id="to-fomo"><span>Mint price table</span></h2>
+                        <p>In order to support early minter, minting price increses by 10 MATIC every 100 mints.</p>
                     </div>
                     <div class="col-lg-6 text-light text-center">
                         <table class="table text-light">
@@ -303,60 +317,81 @@
                                 </tr>
                                 <tr>
                                     <th scope="row">100-199</th>
-                                    <td>40</td>
-                                    <td>0.025</td>
+                                    <td>30</td>
+                                    <td>0.017</td>
                                 </tr>
                                 <tr>
                                     <th scope="row">200-299</th>
+                                    <td>40</td>
+                                    <td>0.023</td>
+                                </tr>
+                                <tr>
+                                    <th scope="row">300-399</th>
+                                    <td>50</td>
+                                    <td>0.029</td>
+                                </tr>
+                                <tr>
+                                    <th scope="row">400-499</th>
                                     <td>60</td>
                                     <td>0.035</td>
                                 </tr>
                                 <tr>
-                                    <th scope="row">300-399</th>
-                                    <td>80</td>
-                                    <td>0.05</td>
-                                </tr>
-                                <tr>
-                                    <th scope="row">400-499</th>
-                                    <td>100</td>
-                                    <td>0.06</td>
-                                </tr>
-                                <tr>
                                     <th scope="row">500-599</th>
-                                    <td>120</td>
-                                    <td>0.075</td>
+                                    <td>70</td>
+                                    <td>0.041</td>
                                 </tr>
                                 <tr>
                                     <th scope="row">600-699</th>
-                                    <td>140</td>
-                                    <td>0.085</td>
+                                    <td>80</td>
+                                    <td>0.046</td>
                                 </tr>
                                 <tr>
                                     <th scope="row">700-799</th>
-                                    <td>160</td>
-                                    <td>0.1</td>
+                                    <td>90</td>
+                                    <td>0.052</td>
                                 </tr>
                                 <tr>
                                     <th scope="row">800-899</th>
-                                    <td>180</td>
-                                    <td>0.11</td>
+                                    <td>100</td>
+                                    <td>0.058</td>
                                 </tr>
                                 <tr>
                                     <th scope="row">900-999</th>
-                                    <td>200</td>
-                                    <td>0.12</td>
+                                    <td>110</td>
+                                    <td>0.064</td>
                                 </tr>
                             </tbody>
                         </table>
                     </div>
             </div>
         </section>
-        <!-- end: Section -->
+        <!-- end: Section FOMO Table -->
+
+
+        <!-- Section Tokenomics-->
+        <section>
+            <div class="container">
+                <div class="row">
+                    <div class="heading-text heading-gradient col-lg-6">
+                        <h2 class="font-weight-800" id="to-tokenomics"><span>Tokenomics</span></h2>
+                        <p>PFPoop includes a strong (and useless) tokenomics.</p>
+                        <p>How is it works? Good question:</p>
+                        <p><i class="fa fa-arrow-circle-right"></i> Each minted PFPoop rewards you automatically with <b>100 $POOP Tokens</b>.</p>
+                        <p><i class="fa fa-arrow-circle-right"></i> After minted out, passive incomes will follow for all owner of PFPoops. Each month <b>10 $POOP tokens</b> will be tranfered to PFPoop's owners for 30 months.</p>
+                        <p><i class="fa fa-info-circle"></i> Connect your wallet to monitor your $POOP balance.</p>
+                        <p><i class="fa fa-info-circle"></i> $POOP token can be traded on <a target="_blank" href="https://polygon.sushi.com/add/ETH/0xC8f44553770CDc491f10C0b47F0172bfB4175ee5">Sushiswap</a></p>
+                    </div>
+                    <div class="col-lg-6 text-center align-self-center">
+                        <img class="chart-img" src="./assets/chart.png">
+                    </div>
+            </div>
+        </section>
+        <!-- end: Section Tokenomics -->
 
 
 
         <!-- Testimonials -->
-        <section class="fullscreen" data-bg-image="assets/poop/266.png">
+        <section class="fullscreen" data-bg-image="assets/poop/35.png">
             <div class="bg-overlay" data-style="7"></div>
             <div class="shape-divider" data-style="7" data-position="top" data-flip-vertical="true"></div>
             <div class="shape-divider" data-style="7"></div>
@@ -385,19 +420,16 @@
                         <span>My mom</span>
                     </div>
                     <!-- end: Testimonials item-->
-                    
+                    <!-- Testimonials item -->
                     <div class="testimonial-item">
                         <p>My Metamask Key > 0x2FFDca547f259f275AA3C3c46beC822bc19B73A2 ! Done ! This NFT is awesome i really want this woow</p>
                         <span>iwaryz</span>
                         <span>r/NFTgiveaway, Reddit</span>
                     </div>
-                    
+                    <!-- end: Testimonials item-->
             </div>
         </section>
         <!-- end: Testimonials -->
-
-        
-       
 
 
         <!-- section faq-->
@@ -413,10 +445,6 @@
                         <div style="display: none;" class="ac-content"><img src="assets/homer_bushes.gif"></div>
                     </div>
                     <div class="ac-item">
-                        <h5 class="ac-title"><i class="fa fa-question-circle"></i>PFPoop will be in the Metaverse?</h5>
-                        <div style="display: none;" class="ac-content">Please define first what is a Metaverse, you have 2 hours.</div>
-                    </div>
-                    <div class="ac-item">
                         <h5 class="ac-title"><i class="fa fa-question-circle"></i>Any roadmap?</h5>
                         <div style="display: none;" class="ac-content">Nop, PFPoop may have update in the futur or may not.</div>
                     </div>
@@ -426,32 +454,30 @@
         </section>
         <!-- end: section faq-->
 
+        <!-- section LInk-->
         <section>
             <div class="container">
                    <div class="row">
-                    <div class="col-3 text-center align-self-center">
-                        <a taget="_blank" href="https://twitter.com/pfpoop_xyz"><img style="width: 50%; height:auto;" src="assets/twitter-logo.png"></a>
+                    <div class="col-4 text-center align-self-center">
+                        <a target="_blank" href="https://twitter.com/pfpoop_xyz"><img style="width: 50%; height:auto;" src="assets/twitter-logo.png"></a>
                     </div>
-                    <div class="col-3 text-center align-self-center">
-                        <a taget="_blank" href="https://opensea.io/collection/pfpoop"><img style="width: 50%; height:auto;" src="assets/opensea-logo.png"></a>
+                    <div class="col-4 text-center align-self-center">
+                        <a target="_blank" href="https://opensea.io/collection/pfpoop"><img style="width: 50%; height:auto;" src="assets/opensea-logo.png"></a>
                     </div>
-                    <div class="col-3 text-center align-self-center">
-                        <a taget="_blank" href="https://polygonscan.com/token/0x64386bf59bfBc2Be39D054b050b04CE6402Ed7e3"><img  style="width: 50%; height:auto;" src="assets/polygon-logo.png"></a>
-                    </div>
-                    <div class="col-3 text-center align-self-center">
-                        <a taget="_blank" href="https://nftdesire.io"><img  style="width: 50%; height:auto;" src="assets/NFTDesire-logo-bl.png"></a>
+                    <div class="col-4 text-center align-self-center">
+                        <a target="_blank" href="https://polygonscan.com/token/0x64386bf59bfBc2Be39D054b050b04CE6402Ed7e3"><img  style="width: 50%; height:auto;" src="assets/polygon-logo.png"></a>
                     </div>
                 </div>
             </div>
         </section>
-
+        <!-- end: section LInk-->
 
         <!-- Footer -->
         <footer id="footer" class="inverted">
                                
             <div class="copyright-content">
                 <div class="container">
-                    <div class="copyright-text text-center">&copy; 2021 PFPoop. All Rights Reserved.</div>
+                    <div class="copyright-text text-center">&copy; 2022 PFPoop. All Rights Reserved.</div>
                 </div>
             </div>
         </footer>
@@ -488,16 +514,30 @@
         </div>
         <!-- end: Modal strip success-->
 
+        <!-- Modal strip danger-->
+        <div id="modalStripDanger" class="modal-strip modal-top background-danger">
+            <div class="container">
+                <div class="text-center" id="modalStripDangerText">
+                </div>
+            </div>
+        </div>
+        <!-- end: Modal strip success-->
 
-    </div> <!-- end: Body Inner -->
+
+    </div> 
+    <!-- end: Body Inner -->
+
     <!-- Scroll top -->
     <a id="scrollTop"><i class="icon-chevron-up"></i><i class="icon-chevron-up"></i></a>
+
     <!--Plugins-->
-    
     <script src="js/plugins.js"></script>
     <!--Template functions-->
     <script src="js/functions.js"></script>
+    <!--Custom functions-->
     <script type="text/javascript" src="./main.js"></script>
+    <script type="text/javascript" src="./utils.js"></script>
+    <!--Analytics functions-->
     <script defer data-domain="pfpoop.xyz" src="https://plausible.io/js/plausible.js"></script>
 </body>
 
